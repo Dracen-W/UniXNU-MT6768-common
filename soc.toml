@@ -1,0 +1,10 @@
+schema_version = 2
+
+[soc]
+name = "mt6768"
+description = "MediaTek MT6768/MT6769Z"
+source_repository = "https://github.com/Dracen-W/UniXNU-merlinx"
+source_revision = "e57b227b4b75b1f4c9b4d1a0df6e7e9b6f6c3a8f"
+
+[components]
+include = ["ArmCpu", "ArmDTPlatform", "MaliG52"]
