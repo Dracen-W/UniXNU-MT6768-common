@@ -1,0 +1,17 @@
+diff --git a/iokit/KernelConfigTables.cpp b/iokit/KernelConfigTables.cpp
+--- a/iokit/KernelConfigTables.cpp
++++ b/iokit/KernelConfigTables.cpp
+@@ -101,4 +101,12 @@
+     "     'IOProviderClass' = IOPlatformExpertDevice;"
+     "     'IOProbeScore'    = 500:32;"
+     "   }"
++#endif
++#if defined(XNU_NATIVE_EMMC) && XNU_NATIVE_EMMC
++    "   ,{"
++    "     'IOClass'         = NativeEmmc;"
++    "     'IOMatchCategory' = NativeEmmcRoot;"
++    "     'IOProviderClass' = IOPlatformExpertDevice;"
++    "     'IOProbeScore'    = 500:32;"
++    "   }"
+ #endif
+     ")";
