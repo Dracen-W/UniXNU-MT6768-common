@@ -1,0 +1,5 @@
+mt6768-emmc-personality.patch
+mt6768-mali-personality.patch
+mt6768-workqueue-parallelism.patch
+mt6768-smp-flush-ttep.patch
+mt6768-smp-el2-drop.patch

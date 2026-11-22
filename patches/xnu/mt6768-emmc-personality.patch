@@ -1,7 +1,7 @@
 diff --git a/iokit/KernelConfigTables.cpp b/iokit/KernelConfigTables.cpp
 --- a/iokit/KernelConfigTables.cpp
 +++ b/iokit/KernelConfigTables.cpp
-@@ -101,4 +101,12 @@
+@@ -101,5 +101,13 @@
      "     'IOProviderClass' = IOPlatformExpertDevice;"
      "     'IOProbeScore'    = 500:32;"
      "   }"
