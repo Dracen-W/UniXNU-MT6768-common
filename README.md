@@ -1,30 +1,22 @@
-# UniXNU MT6768 support
+# UniXNU-MT6768-common
 
-Shared MediaTek MT6768/MT6769Z support for UniXNU: CPU topology, GICv3, the
-architectural timer, the Mali-G52 node and the MTK power, clock and pwrap
-resources used during GPU bring-up.
+Shared MediaTek MT6768 / MT6769Z (Helio G85) SoC configuration, device tree includes, and XNU kernel patches for UniXNU.
 
-`soc.toml` selects `ArmCpu`, `ArmDTPlatform` and `MaliG52`. Device repositories
-supply RAM, board peripherals, firmware, packaging and the final power policy.
-The board DTS includes `dts/mt6768.dtsi` and keeps board-only nodes.
+## Current Status
 
-Hardware descriptions come from the vendor MT6768 device tree and the MT6768
-Mali bring-up work. The shared tree contains only confirmed SoC resources.
+- **iPadOS 17.7.11 (`21H461`)**: Confirmed working on hardware (8-core SMP + Mali-G52 + NativeEmmc), **not yet fully stress-tested**.
+- **iOS 16.7.16 (`20H392`)**: Confirmed working on hardware (8-core SMP `smp=1 cpus=8`, EL2-to-EL1 drop with `SPAN=1`, TTEP flush, workqueue parallelism, zero kernel panics).
 
-Build through the [UniXNU CLI](https://unixnu.com/building). Read the
-[device repository specification](https://unixnu.com/porting/device-repository),
-[device-tree specification](https://unixnu.com/porting/device-tree),
-[SoC support guide](https://unixnu.com/porting/soc-support) and
-[component catalog](https://unixnu.com/reference/components).
+## Configuration Layering (`CONFIG_XNU_DW_MT6768_*`)
 
-## Contents
+- [`configs/mt6768.config`](configs/mt6768.config): SoC baseline fragment loaded first by board `board.toml`.
+- [`configs/example.config`](configs/example.config): Blank reference template documenting all `CONFIG_XNU_DW_MT6768_*` parameters (`SMP`, `CPUS`, `EL2_DROP`, `FLUSH_TTEP`, `WORKQUEUE_PARALLEL`).
+- Board general configs (`configs/merlinx_defconfig`) and OS override configs (`configs/merlinx-iOS16.7.config`) layer on top and take final precedence.
 
-| Path | Contents |
-| --- | --- |
-| `soc.toml` | SoC profile and component selection |
-| `configs/mt6768.config` | Shared kernel configuration fragment |
-| `dts/mt6768.dtsi` | Shared CPU, GIC, timer, Mali, SPM, topckgen, mfgcfg and pwrap nodes |
-| `patches/xnu/series` | Ordered SoC patches; currently empty |
-| `kits/` | Shared platform helpers, when required |
+## SoC Patch Series (`patches/xnu/series`)
 
-The initial device is merlinx (Xiaomi Redmi Note 9).
+- `mt6768-emmc-personality.patch`
+- `mt6768-mali-personality.patch`
+- `mt6768-workqueue-parallelism.patch`
+- `mt6768-smp-flush-ttep.patch`
+- `mt6768-smp-el2-drop.patch`
